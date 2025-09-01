@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center mb-4">
+  <h2 class="travel-title">💡 Dicas de Viagem</h2>
+  <hr class="divider">
+  <p class="subtitle">Cadastre dicas úteis e torne sua próxima aventura ainda melhor!</p>
+</div>
+
+<!-- Formulário -->
+<div class="card shadow-lg mb-5 border-info">
+  <div class="card-header bg-light text-primary fw-bold">Cadastrar Dica</div>
+  <div class="card-body">
+    <form method="POST">
+      <input type="text" name="titulo" placeholder="Título da dica..." class="form-control mb-3">
+      <input type="text" name="contexto" placeholder="Quando usar esta dica? (ex: em aeroportos, trilhas...)" class="form-control mb-3">
+      <textarea name="conteudo" placeholder="Descreva a dica de forma clara e objetiva..." class="form-control mb-3"></textarea>
+      <button class="btn btn-primary w-100">Cadastrar</button>
+    </form>
+  </div>
+</div>
+
+{% if dicas %}
+  <div class="table-responsive">
+    <table class="table table-hover align-middle dica-table">
+      <thead>
+        <tr>
+          <th scope="col">Título</th>
+          <th scope="col">Contexto</th>
+          <th scope="col">Conteúdo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dica in dicas %}
+          <tr>
+            <td class="fw-bold text-primary">{{ dica.titulo }}</td>
+            <td>{{ dica.contexto }}</td>
+            <td><div class="desc-cell">{{ dica.conteudo }}</div></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <p class="no-dica text-center">⚠ Nenhuma dica cadastrada ainda...</p>
+{% endif %}
+{% endblock %}

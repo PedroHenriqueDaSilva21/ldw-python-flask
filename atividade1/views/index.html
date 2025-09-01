@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center mt-5">
+
+    <!-- Título com efeito -->
+    <h1 class="travel-title text-glow">🌍 Bem-vindo ao Explorador de Viagens</h1>
+    <hr class="divider">
+
+    <!-- Subtítulo -->
+    <p class="lead subtitle">
+        Descubra destinos incríveis e receba dicas valiosas para sua próxima aventura.
+    </p>
+
+    <!-- Botões de ação -->
+    <div class="mt-4 d-flex justify-content-center flex-wrap">
+        <a href="{{ url_for('destinos_page') }}" class="btn btn-outline-primary btn-lg mx-2 my-2 px-4 shadow-lg">
+            📌 Destinos
+        </a>
+        <a href="{{ url_for('dicas_page') }}" class="btn btn-outline-success btn-lg mx-2 my-2 px-4 shadow-lg">
+            💡 Dicas de Viagem
+        </a>
+    </div>
+</div>
+{% endblock %}
