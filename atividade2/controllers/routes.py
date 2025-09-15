@@ -13,7 +13,7 @@ def init_app(app: Flask):
 
     @app.route('/')
     def home():
-        return render_template('home.html')
+        return render_template('base.html')
 
     @app.route('/destinos', methods=['GET', 'POST'])
     def destinos_page():
