@@ -7,6 +7,7 @@
   <p class="text-light">Cadastre novos destinos com nome, descrição e dicas para os viajantes!</p>
 </div>
 
+<!-- Card do formulário -->
 <div class="card shadow-lg mb-5 border-primary">
   <div class="card-header bg-dark text-primary fw-bold">Adicionar Destino</div>
   <div class="card-body">
@@ -19,32 +20,63 @@
   </div>
 </div>
 
+<!-- Destinos cadastrados manualmente -->
 {% if destinos %}
-<h3 class="text-info mb-3">✍️ Destinos cadastrados por você / API</h3>
-<div class="row">
-    {% for d in destinos %}
-    <div class="col-md-6">
-        <div class="card mb-4 shadow">
-            <div class="card-body text-center">
-                {% if d.bandeira %}
-                    <img src="{{ d.bandeira }}" alt="Bandeira de {{ d.titulo }}" class="img-fluid mb-3 shadow-sm border rounded" style="max-height: 100px;">
-                {% endif %}
-                <h5 class="card-title">{{ d.titulo }}</h5>
-                <p class="card-text"><strong>Descrição:</strong> {{ d.descricao }}</p>
-                <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#dica{{ loop.index }}">
-                    Ver Dica / Curiosidade
-                </button>
-                <div class="collapse mt-3" id="dica{{ loop.index }}">
-                    <div class="card card-body bg-light text-dark border-primary">
-                        <strong>Dica:</strong> {{ d.dica }}
-                    </div>
-                </div>
+  <h3 class="text-info mb-3">✍️ Destinos cadastrados por você</h3>
+  <div class="row">
+    {% for d in destinos if not d.get('bandeira') %}
+      <div class="col-md-6">
+        <div class="card destino-card mb-4 shadow">
+          <div class="card-body">
+            <h5 class="card-title text-success">📍 {{ d.titulo }}</h5>
+            <p class="card-text"><strong>Descrição:</strong> {{ d.descricao }}</p>
+
+            <button class="btn btn-outline-success btn-sm mt-2" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#dicaManual{{ loop.index }}">
+              Ver Dicas
+            </button>
+
+            <div class="collapse mt-3" id="dicaManual{{ loop.index }}">
+              <div class="card card-body bg-dark text-light border-success">
+                <strong>Dica:</strong> {{ d.dica }}
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
     {% endfor %}
-</div>
-{% else %}
-<p class="text-center">Nenhum destino cadastrado ainda...</p>
+  </div>
 {% endif %}
+
+<!-- Destinos da API -->
+<h3 class="text-warning mt-5 mb-3">🌐 Destinos sugeridos pelo Explorador</h3>
+<div class="row">
+  {% for d in destinos if d.get('bandeira') %}
+    <div class="col-md-6">
+      <div class="card destino-card mb-4 shadow">
+        <div class="card-body text-center">
+          {% if d.bandeira %}
+            <img src="{{ d.bandeira }}" alt="Bandeira de {{ d.titulo }}" 
+                 class="img-fluid mb-3 shadow-sm border rounded" 
+                 style="max-height: 100px;">
+          {% endif %}
+
+          <h5 class="card-title text-primary">🌎 {{ d.titulo }}</h5>
+          <p class="card-text"><strong>Descrição:</strong> {{ d.descricao }}</p>
+
+          <button class="btn btn-outline-primary btn-sm mt-2" type="button" 
+                  data-bs-toggle="collapse" data-bs-target="#dicaApi{{ loop.index }}">
+            Ver Curiosidade
+          </button>
+
+          <div class="collapse mt-3" id="dicaApi{{ loop.index }}">
+            <div class="card card-body bg-light text-dark border-primary">
+              <strong>Dica:</strong> {{ d.dica }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
 {% endblock %}
