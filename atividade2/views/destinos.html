@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center mb-4">
+  <h2 class="travel-title">🌍 Destinos de Viagem</h2>
+  <hr class="divider">
+  <p class="text-light">Cadastre novos destinos com nome, descrição e dicas para os viajantes!</p>
+</div>
+
+<div class="card shadow-lg mb-5 border-primary">
+  <div class="card-header bg-dark text-primary fw-bold">Adicionar Destino</div>
+  <div class="card-body">
+    <form method="POST">
+      <input type="text" name="titulo" placeholder="Nome do destino..." class="form-control mb-3">
+      <input type="text" name="descricao" placeholder="Descrição do local..." class="form-control mb-3">
+      <input type="text" name="dica" placeholder="Dicas para quem for visitar..." class="form-control mb-3">
+      <button class="btn btn-primary w-100">Cadastrar</button>
+    </form>
+  </div>
+</div>
+
+{% if destinos %}
+<h3 class="text-info mb-3">✍️ Destinos cadastrados por você / API</h3>
+<div class="row">
+    {% for d in destinos %}
+    <div class="col-md-6">
+        <div class="card mb-4 shadow">
+            <div class="card-body text-center">
+                {% if d.bandeira %}
+                    <img src="{{ d.bandeira }}" alt="Bandeira de {{ d.titulo }}" class="img-fluid mb-3 shadow-sm border rounded" style="max-height: 100px;">
+                {% endif %}
+                <h5 class="card-title">{{ d.titulo }}</h5>
+                <p class="card-text"><strong>Descrição:</strong> {{ d.descricao }}</p>
+                <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#dica{{ loop.index }}">
+                    Ver Dica / Curiosidade
+                </button>
+                <div class="collapse mt-3" id="dica{{ loop.index }}">
+                    <div class="card card-body bg-light text-dark border-primary">
+                        <strong>Dica:</strong> {{ d.dica }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-center">Nenhum destino cadastrado ainda...</p>
+{% endif %}
+{% endblock %}
